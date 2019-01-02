@@ -88,7 +88,7 @@ OHLCTooltip.propTypes = {
 	fontSize: PropTypes.number,
 	onClick: PropTypes.func,
 	displayValuesFor: PropTypes.func,
-	textFill: PropTypes.string,
+	textFill: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 	labelFill: PropTypes.string,
 	displayTexts: PropTypes.object,
 };
@@ -148,6 +148,8 @@ function defaultDisplay(props, moreProps, itemsToDisplay) {
 		x,
 		y
 	} = itemsToDisplay;
+    
+    const textColor = typeof textFill === 'function' ? textFill(itemsToDisplay) : textFill
 	return (
 		<g
 			className={`react-stockcharts-tooltip-hover ${className}`}
@@ -165,17 +167,17 @@ function defaultDisplay(props, moreProps, itemsToDisplay) {
 					key="label"
 					x={0}
 					dy="5">{displayTexts.d}</ToolTipTSpanLabel>
-				<tspan key="value" fill={textFill}>{displayDate}</tspan>
+				<tspan key="value" fill={textColor}>{displayDate}</tspan>
 				<ToolTipTSpanLabel fill={labelFill} key="label_O">{displayTexts.o}</ToolTipTSpanLabel>
-				<tspan key="value_O" fill={textFill}>{open}</tspan>
+				<tspan key="value_O" fill={textColor}>{open}</tspan>
 				<ToolTipTSpanLabel fill={labelFill} key="label_H">{displayTexts.h}</ToolTipTSpanLabel>
-				<tspan key="value_H" fill={textFill}>{high}</tspan>
+				<tspan key="value_H" fill={textColor}>{high}</tspan>
 				<ToolTipTSpanLabel fill={labelFill} key="label_L">{displayTexts.l}</ToolTipTSpanLabel>
-				<tspan key="value_L" fill={textFill}>{low}</tspan>
+				<tspan key="value_L" fill={textColor}>{low}</tspan>
 				<ToolTipTSpanLabel fill={labelFill} key="label_C">{displayTexts.c}</ToolTipTSpanLabel>
-				<tspan key="value_C" fill={textFill}>{close}</tspan>
+				<tspan key="value_C" fill={textColor}>{close}</tspan>
 				<ToolTipTSpanLabel fill={labelFill} key="label_Vol">{displayTexts.v}</ToolTipTSpanLabel>
-				<tspan key="value_Vol" fill={textFill}>{volume}</tspan>
+				<tspan key="value_Vol" fill={textColor}>{volume}</tspan>
 			</ToolTipText>
 		</g>
 	);
